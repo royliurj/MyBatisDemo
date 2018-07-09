@@ -14,6 +14,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyBatisTest {
 
@@ -112,8 +114,11 @@ public class MyBatisTest {
             newEmp.setLastName("last name");
             newEmp.setEmail("123");
             newEmp.setGender("1");
+
+            System.out.println(newEmp);
             mapper.addEmp(newEmp);
 
+            System.out.println(newEmp);
 
             //修改数据
             Employee updateEmp = new Employee();
@@ -129,6 +134,57 @@ public class MyBatisTest {
             mapper.updateEmp(updateEmp);
 
             sqlSession.commit();
+
+            System.out.println("success");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testGetEmployeeByMultiParameter(){
+        SqlSession sqlSession = null;
+        try {
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+
+            //获取SqlSession
+            sqlSession = sqlSessionFactory.openSession();
+
+            //执行查询语句
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+            Employee emp = mapper.getEmpByIdAndGender(1,"2");
+            System.out.println(emp);
+
+            System.out.println("success");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
+    }
+    @Test
+    public void testGetEmployeeByMap(){
+        SqlSession sqlSession = null;
+        try {
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+
+            //获取SqlSession
+            sqlSession = sqlSessionFactory.openSession();
+
+            //执行查询语句
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+            Map<String,Object> map = new HashMap<String, Object>();
+            map.put("id",1);
+            map.put("gender","2");
+
+            Employee emp = mapper.getEmpByMap(map);
+            System.out.println(emp);
 
             System.out.println("success");
 

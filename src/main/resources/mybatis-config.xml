@@ -63,11 +63,11 @@
         type="DB_VENDOR" 作用是得到数据库厂商的标识
         MySQL、Oracle、SQL Server
     -->
-    <!--<databaseIdProvider type="DB_VENDOR">-->
-        <!--&lt;!&ndash;为mysql数据库起名为&ndash;&gt;-->
-        <!--<property name="MySQL" value="mysql2"/>-->
-        <!--<property name="Oracle" value="oracle2"/>-->
-    <!--</databaseIdProvider>-->
+    <databaseIdProvider type="DB_VENDOR">
+        <!--为mysql数据库起名为-->
+        <property name="MySQL" value="mysql2"/>
+        <property name="Oracle" value="oracle2"/>
+    </databaseIdProvider>
 
     <!--将Sql映射注册到全局配置中
         resource：引用类路径下到映射文件

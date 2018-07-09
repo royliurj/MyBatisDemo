@@ -3,15 +3,45 @@
         PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roy.mybatis.dao.EmployeeMapper">
-    <select id="getEmpById" parameterType="int" resultType="com.roy.mybatis.bean.Employee">
+    <select id="getEmpById" parameterType="int"
+            resultType="com.roy.mybatis.bean.Employee"
+            databaseId="mysql2">
         SELECT * FROM tbl_employee WHERE id=#{id}
     </select>
 
+    <select id="getEmpByIdAndGender" resultType="com.roy.mybatis.bean.Employee">
+        SELECT * FROM tbl_employee WHERE id=#{id} AND gender = #{gender}
+    </select>
+    <select id="getEmpByMap" resultType="com.roy.mybatis.bean.Employee">
+        SELECT * FROM tbl_employee WHERE id=#{id} AND gender = #{gender}
+    </select>
+    <!--<select id="getEmpByIdAndGender" resultType="com.roy.mybatis.bean.Employee">-->
+        <!--SELECT * FROM tbl_employee WHERE id=#{param1} AND gender = #{param2}-->
+    <!--</select>-->
     <!--public void addEmp(Employee employee);-->
-    <insert id="addEmp">
+    <!--
+        Mybatis也是利用statement的getGenreatedKeys()获取
+        useGeneratedKeys="true" : 使用自增主键策略
+        keyProperty="id" : 返回的自增主键存入JavaBean的哪个属性
+    -->
+    <insert id="addEmp" useGeneratedKeys="true" keyProperty="id">
         insert into tbl_employee (last_name,gender,email)
         VALUES (#{lastName},#{gender},#{email})
     </insert>
+
+    <!--&lt;!&ndash; Oracle 不支持自增，使用序列来模拟自增，主键先从序列中拿到值，在执行插入操作&ndash;&gt;-->
+    <!--<insert id="addEmp" databaseId="oracle2">-->
+        <!--&lt;!&ndash;-->
+            <!--keyProperty把查出来到值插入到javabean到哪个属性-->
+            <!--order：在当前sql之前执行-->
+        <!--&ndash;&gt;-->
+        <!--<selectKey keyProperty="id" order="BEFORE" resultType="Integer">-->
+          <!--&lt;!&ndash;编写查询主键到sql语句&ndash;&gt;-->
+            <!--select EMPLOYEES_SEQ.nextval from dual-->
+        <!--</selectKey>-->
+        <!--insert into tbl_employee (id,last_name,gender,email)-->
+        <!--VALUES (#{id},#{lastName},#{gender},#{email})-->
+    <!--</insert>-->
 
     <!--public void updateEmp(Employee employee);-->
     <update id="updateEmp">
