@@ -23,9 +23,7 @@ public class MyBatisTest {
         try {
 
             //获取SqlSesssionFactory
-            String resource = "mybatis-config.xml";
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 
             //获取SqlSession
             sqlSession = sqlSessionFactory.openSession();
@@ -48,9 +46,7 @@ public class MyBatisTest {
         try {
 
             //获取SqlSesssionFactory
-            String resource = "mybatis-config.xml";
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 
             //获取SqlSession
             sqlSession = sqlSessionFactory.openSession();
@@ -76,9 +72,7 @@ public class MyBatisTest {
         try {
 
             //获取SqlSesssionFactory
-            String resource = "mybatis-config.xml";
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 
             //获取SqlSession
             sqlSession = sqlSessionFactory.openSession();
@@ -97,5 +91,59 @@ public class MyBatisTest {
         }
     }
 
+    @Test
+    public void testAddDeleteUpdate(){
+
+        SqlSession sqlSession = null;
+        try {
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+
+            //获取SqlSession
+            sqlSession = sqlSessionFactory.openSession();
+
+            //执行查询语句
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+            Employee emp = mapper.getEmpById(1);
+            System.out.println(emp);
+
+            //添加数据
+            Employee newEmp = new Employee();
+            newEmp.setLastName("last name");
+            newEmp.setEmail("123");
+            newEmp.setGender("1");
+            mapper.addEmp(newEmp);
+
+
+            //修改数据
+            Employee updateEmp = new Employee();
+            updateEmp.setId(1);
+            updateEmp.setGender("2");
+            updateEmp.setEmail("asdf@dafs");
+            updateEmp.setLastName("333");
+
+            //删除数据
+            boolean result = mapper.deleteEmp(3);
+            System.out.println(result);
+
+            mapper.updateEmp(updateEmp);
+
+            sqlSession.commit();
+
+            System.out.println("success");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    private SqlSessionFactory getSqlSessionFactory() throws IOException {
+        //获取SqlSesssionFactory
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        return new SqlSessionFactoryBuilder().build(inputStream);
+    }
 
 }

@@ -18,14 +18,14 @@
         <!--控制台输出sql语句-->
         <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
-    <typeAliases>
-        <!-- 其实就是将bean的替换成一个短的名字-->
-        <!--<typeAlias type="com.roy.mybatis.bean.Employee" alias="Employee1"/>-->
-        <!--批量起别名 为某个包下的所有类起别名
-            name：指定包（当前及子包）都起一个默认别名
-        -->
-        <package name="com.roy.mybatis.bean"/>
-    </typeAliases>
+    <!--<typeAliases>-->
+        <!--&lt;!&ndash; 其实就是将bean的替换成一个短的名字&ndash;&gt;-->
+        <!--&lt;!&ndash;<typeAlias type="com.roy.mybatis.bean.Employee" alias="Employee1"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;批量起别名 为某个包下的所有类起别名-->
+            <!--name：指定包（当前及子包）都起一个默认别名-->
+        <!--&ndash;&gt;-->
+        <!--<package name="com.roy.mybatis.bean"/>-->
+    <!--</typeAliases>-->
     
     <typeHandlers>
         <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="java.math.RoundingMode"/>
@@ -63,11 +63,11 @@
         type="DB_VENDOR" 作用是得到数据库厂商的标识
         MySQL、Oracle、SQL Server
     -->
-    <databaseIdProvider type="DB_VENDOR">
-        <!--为mysql数据库起名为-->
-        <property name="MySQL" value="mysql2"/>
-        <property name="Oracle" value="oracle2"/>
-    </databaseIdProvider>
+    <!--<databaseIdProvider type="DB_VENDOR">-->
+        <!--&lt;!&ndash;为mysql数据库起名为&ndash;&gt;-->
+        <!--<property name="MySQL" value="mysql2"/>-->
+        <!--<property name="Oracle" value="oracle2"/>-->
+    <!--</databaseIdProvider>-->
 
     <!--将Sql映射注册到全局配置中
         resource：引用类路径下到映射文件
@@ -77,7 +77,7 @@
                  没有Sql映射文件，所有到Sql都是利用注解写在接口上
     -->
     <mappers>
-        <mapper class="com.roy.mybatis.dao.EmployeeMapperAnnotation"/>
+        <!--<mapper class="com.roy.mybatis.dao.EmployeeMapperAnnotation"/>-->
         <mapper resource="mapper/EmployeeMapper.xml" />
         <!--<mapper url="file:///var/mappers/Autofac.xml"/>-->
 
